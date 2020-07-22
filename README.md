@@ -11,3 +11,5 @@ A Translation Application with Python.
 1. googletrans
 2. SpeechRecognition
 3. pyPDF2
+4. pyttsx3 (Python Text to Speech)
+
