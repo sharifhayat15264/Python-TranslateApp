@@ -8,8 +8,8 @@ A Translation Application with Python.
 4. A clean and interactive front-end for easy accessibility.
 
 ## Python Modules
-1. googletrans
-2. SpeechRecognition
-3. pyPDF2
-4. pyttsx3 (Python Text to Speech)
-
+1. [googletrans](https://pypi.org/project/googletrans/)
+2. [pyPDF2](https://pypi.org/project/PyPDF2/)
+3. [python-docx](https://pypi.org/project/python-docx/)
+4. [SpeechRecognition](https://pypi.org/project/SpeechRecognition/) 
+5. [pyttsx3 (Python Text to Speech)](https://pypi.org/project/pyttsx3/)
