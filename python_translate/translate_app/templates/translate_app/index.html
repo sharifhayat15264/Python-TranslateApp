@@ -1,0 +1,94 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TranslateApp</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        />
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script> var imgSrc = "{% static 'img/placeholder-image.jpg' %}"; </script>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/aux_functions.js' %}"></script>
+    </head>
+    <body>
+        <div class="topnav bg-dark">
+            <a class="active" href="">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <!-- Search form -->
+            <div class="search-container">
+                <form role="form" method="POST" id="search_form">
+                    {% csrf_token %}
+                    <!-- {{ form.as_p }} -->
+                    <div class="form-inline">
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="search_input"
+                            name="search_input"
+                            placeholder="Search..."
+                            required
+                        />
+                        <button class="ml-3 btn btn-primary"  type="submit" id="search_btn" name="search_btn">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="jumbotron" id="home">
+            <h1 class="display-4">TranslateApp</h1>
+            <p class="lead">A Translation Application with Python.</p>
+            <hr class="my-4">
+            <div class="card-columns">
+                <div class="card bg-danger text-white">
+                    <div class="card-body text-center">
+                        <p class="card-text">Text</p>
+                        <p class="card-text">(Copy & Paste)</p>
+                    </div>
+                </div>
+                <div class="card bg-info text-white">
+                    <div class="card-body text-center">
+                        <p class="card-text">Text Files</p>
+                        <p class="card-text">(.txt, .pdf, .docx)</p>
+                    </div>
+                </div>
+                <div class="card bg-success text-white">
+                    <div class="card-body text-center">
+                        <p class="card-text">Voice</p>
+                        <p class="card-text">(record or .mp3)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            
+        </div>
+
+        <!-- FOLLOWING IS A SPECIAL DIV TO INSERT THE LOADING ANIMATION -->
+        <!-- START OF LOAD ANIMATION -->
+        <div id="load-animation">
+        </div>
+        <!-- END OF LOAD ANIMATION -->
+
+        <div class="container">
+            <div class="row" id="main-content">
+
+            </div>
+        </div>
+    </body>
+</html>
