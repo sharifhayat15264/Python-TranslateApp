@@ -9,7 +9,6 @@ def translate_file(filename, dest_lang, src_lang):
     src_lang = src_lang.lower()
 
     dest_code = langcodes[dest_lang]
-
     src_code = langcodes[src_lang]
 
     try:
@@ -28,20 +27,49 @@ def translate_file(filename, dest_lang, src_lang):
         return
 
 def translate_pdf(filename, dest_lang, src_lang):
-    with open(filename, "rb") as pdf_file:
-        reader = PyPDF2.PdfFileReader(pdf_file)
-        print(reader.numPages)
-        page = reader.getPage(0)
-        text = page.extractText()
-        #fulltext = '\n'.join(text)
-        print(text)
+    dest_lang = dest_lang.lower()
+    src_lang = src_lang.lower()
+
+    dest_code = langcodes[dest_lang]
+    src_code = langcodes[src_lang]
+
+    try:
+        with open(filename, "rb") as pdf_file:
+            reader = PyPDF2.PdfFileReader(pdf_file)
+            #print(reader.numPages)
+            page = reader.getPage(0)
+            text = page.extractText()
+            full_text = text.replace("\n", "")
+            #print(f, type(text))
+
+            translator = Translator()
+            translated = translator.translate(full_text, dest_code, src_code)
+            translation = translated.text
+            print(translation)
+            with open("resultpdf.txt", "w") as result:
+                result.write(translation)
+                print("File Created!")
+                return
+    except FileNotFoundError:
+        print("File not found.")
+        return
+
+
+
+translate_pdf("test.pdf", "German", "English")
+#translate_file("try.txt", "German", "English")
 
 
 
 
 
-# translate_pdf("test.pdf", "German", "English")
-translate_file("try.txt", "German", "English")
+
+
+
+
+
+
+##  UNNECESSARY ##
 
 # def getText(filename):
 #     doc = docx.Document(filename)
