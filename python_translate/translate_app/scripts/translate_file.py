@@ -29,7 +29,6 @@ def translate_file(filename, dest_lang, src_lang):
         return
 
 # PDF #
-
 def translate_pdf(filename, dest_lang, src_lang):
     dest_lang = dest_lang.lower()
     src_lang = src_lang.lower()
@@ -59,9 +58,6 @@ def translate_pdf(filename, dest_lang, src_lang):
         return
 
 # translate_pdf("test.pdf", "German", "English")
-
-
-# translate_file("try.txt", "German", "English")
 
 # DOCS #
 
