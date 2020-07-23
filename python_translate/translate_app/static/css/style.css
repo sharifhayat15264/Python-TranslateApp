@@ -73,5 +73,9 @@ body {
 }
 
 #home {
-  text-align: center;
+    text-align: center;
+}
+
+.card::hover {
+    background-color: #007acc;
 }
