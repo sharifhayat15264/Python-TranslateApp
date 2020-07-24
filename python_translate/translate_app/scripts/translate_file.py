@@ -28,6 +28,7 @@ def translate_file(filename, dest_lang, src_lang):
         print("File not found")
         return
 
+
 # PDF #
 def translate_pdf(filename, dest_lang, src_lang):
     dest_lang = dest_lang.lower()
@@ -39,17 +40,17 @@ def translate_pdf(filename, dest_lang, src_lang):
     try:
         with open(filename, "rb") as pdf_file:
             reader = PyPDF2.PdfFileReader(pdf_file)
-            #print(reader.numPages)
+            # print(reader.numPages)
             page = reader.getPage(0)
             text = page.extractText()
             full_text = text.replace("\n", "")
-            #print(f, type(text))
+            # print(f, type(text))
 
             translator = Translator()
             translated = translator.translate(full_text, dest_code, src_code)
             translation = translated.text
             print(translation)
-            with open("resultpdf.txt", "w") as result:
+            with open("result_pdf.txt", "w") as result:
                 result.write(translation)
                 print("File Created!")
                 return
@@ -59,8 +60,8 @@ def translate_pdf(filename, dest_lang, src_lang):
 
 # translate_pdf("test.pdf", "German", "English")
 
-# DOCS #
 
+# DOCS #
 def get_text_docs(filename):
     doc = Document(filename)
     full_text = list()
@@ -93,3 +94,6 @@ def generate_file(translation):
 def driver(filename, dest_lang, src_lang):
     translation = translate_docs(filename, dest_lang, src_lang)
     generate_file(translation)
+
+
+print(langcodes)
