@@ -170,4 +170,9 @@
     aos_init();
   });
 
+  $(document).on('click', '#', function(e) {
+    e.preventDefault();
+
+   });
+
 })(jQuery);

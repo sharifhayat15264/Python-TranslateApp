@@ -45,13 +45,13 @@ h1, h2, h3, h4, h5, h6 {
   width: 40px;
   height: 40px;
   border-radius: 4px;
-  background: #5846f9;
+  background: #003073;
   color: #fff;
   transition: all 0.4s;
 }
 
 .back-to-top i:hover {
-  background: #7b27d8;
+  background: #00193d;
   color: #fff;
 }
 
@@ -74,7 +74,7 @@ h1, h2, h3, h4, h5, h6 {
   position: fixed;
   top: calc(50% - 30px);
   left: calc(50% - 30px);
-  border: 6px solid #5846f9;
+  border: 6px solid #003073;
   border-top-color: #e7e4fe;
   border-radius: 50%;
   width: 60px;
@@ -545,7 +545,7 @@ h1, h2, h3, h4, h5, h6 {
 # Sections General
 --------------------------------------------------------------*/
 section {
-  padding: 100px 0;
+  padding: 70px 0;
   overflow: hidden;
 }
 
@@ -565,6 +565,7 @@ section {
   margin-bottom: 20px;
   padding-bottom: 20px;
   position: relative;
+  color: #0b1033;
 }
 
 .section-title h2::after {
@@ -573,7 +574,7 @@ section {
   display: block;
   width: 50px;
   height: 3px;
-  background: #5846f9;
+  background: #003073;
   bottom: 0;
   left: calc(50% - 25px);
 }
@@ -643,8 +644,17 @@ section {
 # Counts
 --------------------------------------------------------------*/
 .counts {
-  background: linear-gradient(90deg, rgba(88, 70, 249, 0.5) 0%, rgba(123, 39, 216, 0.5) 100%), url("../img/counts-bg.png") center center no-repeat;
   padding: 80px 0 60px 0;
+
+  background-color: #193c6d;
+  filter: progid: DXImageTransform.Microsoft.gradient(gradientType=1, startColorstr='#003073', endColorstr='#029797');
+  background-image: url(//img.alicdn.com/tps/TB1d.u8MXXXXXXuXFXXXXXXXXXX-1900-790.jpg);
+  background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0, #003073), color-stop(100%, #029797));
+  background-image: -webkit-linear-gradient(135deg, #003073, #029797);
+  background-image: -moz-linear-gradient(45deg, #003073, #029797);
+  background-image: -ms-linear-gradient(45deg, #003073 0, #029797 100%);
+  background-image: -o-linear-gradient(45deg, #003073, #029797);
+  background-image: linear-gradient(135deg, #003073, #029797);
 }
 
 .counts .counters span {
@@ -1265,13 +1275,13 @@ section {
   margin-bottom: 0;
 }
 
-.contact .php-email-form {
+.php-email-form {
   box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
   padding: 30px;
   background: #fff;
 }
 
-.contact .php-email-form .validate {
+.php-email-form .validate {
   display: none;
   color: red;
   margin: 0 0 15px 0;
@@ -1279,7 +1289,7 @@ section {
   font-size: 13px;
 }
 
-.contact .php-email-form .error-message {
+.php-email-form .error-message {
   display: none;
   color: #fff;
   background: #ed3c0d;
@@ -1288,11 +1298,11 @@ section {
   font-weight: 600;
 }
 
-.contact .php-email-form .error-message br + br {
+.php-email-form .error-message br + br {
   margin-top: 25px;
 }
 
-.contact .php-email-form .sent-message {
+.php-email-form .sent-message {
   display: none;
   color: #fff;
   background: #18d26e;
@@ -1301,14 +1311,14 @@ section {
   font-weight: 600;
 }
 
-.contact .php-email-form .loading {
+.php-email-form .loading {
   display: none;
   background: #fff;
   text-align: center;
   padding: 15px;
 }
 
-.contact .php-email-form .loading:before {
+.php-email-form .loading:before {
   content: "";
   display: inline-block;
   border-radius: 50%;
@@ -1321,35 +1331,22 @@ section {
   animation: animate-loading 1s linear infinite;
 }
 
-.contact .php-email-form input, .contact .php-email-form textarea {
+.php-email-form input, .php-email-form textarea {
   border-radius: 5px;
   box-shadow: none;
   font-size: 14px;
 }
 
-.contact .php-email-form input:focus, .contact .php-email-form textarea:focus {
+.php-email-form input:focus, .php-email-form textarea:focus {
   border-color: #5846f9;
 }
 
-.contact .php-email-form input {
+.php-email-form input {
   padding: 20px 15px;
 }
 
-.contact .php-email-form textarea {
+.php-email-form textarea {
   padding: 12px 15px;
-}
-
-.contact .php-email-form button[type="submit"] {
-  background: #5846f9;
-  border: 0;
-  padding: 10px 24px;
-  color: #fff;
-  transition: 0.4s;
-  border-radius: 5px;
-}
-
-.contact .php-email-form button[type="submit"]:hover {
-  background: #7b27d8;
 }
 
 @-webkit-keyframes animate-loading {
