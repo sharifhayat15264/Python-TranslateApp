@@ -1,0 +1,163 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="{% static 'img/fav-icon.png' %}" type="image/x-icon" />
+        <!-- Favicons -->
+		<link href="{% static 'img/logo.png' %}" rel="icon">
+		<link href="{% static 'img/logo.png' %}" rel="apple-touch-icon">
+
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>PyTranslate - Speech</title>
+
+        <!-- Icon css link -->
+        <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+        <!-- Bootstrap -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Rev slider css -->
+        <link href="{% static 'vendors/revolution/css/settings.css' %}" rel="stylesheet">
+        <link href="{% static 'vendors/revolution/css/layers.css' %}" rel="stylesheet">
+        <link href="{% static 'vendors/revolution/css/navigation.css' %}" rel="stylesheet">
+
+        <!-- Extra plugin css -->
+        <!-- Vendor CSS Files -->
+        <link href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="{% static 'css/style2.css' %}" rel="stylesheet">
+        <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+        <link href="{% static 'css/card.css' %}" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <!-- ======= Header ======= -->
+		<header id="header" class="fixed-top ">
+			<div class="container-fluid">
+				<div class="row justify-content-center">
+					<div class="col-xl-9 d-flex align-items-center">
+					<!-- <h1 class="logo mr-auto"><a href="index.html">PyTranslate</a></h1> -->
+					<!-- Uncomment below if you prefer to use an image logo -->
+                        <a href="/home" class="logo mr-auto"><img src="{% static 'img/logo.png' %}" alt="" class="img-fluid"></a>
+
+                        <nav class="nav-menu d-none d-lg-block">
+                            <ul>
+                                <li class="active"><a href="/home">Home</a></li>
+                                <li><a href="https://github.com/sharifhayat15264/Python-TranslateApp">Github</a></li>
+                            </ul>
+                        </nav><!-- .nav-menu -->
+					</div>
+				</div>
+			</div>
+		</header>
+        <!-- End Header -->
+
+		<!-- ======= Hero Section ======= -->
+		<section id="hero" class="d-flex align-items-center">
+			<div class="container-fluid" data-aos="fade-up">
+                <div class="section-title">
+                    <h2>Translate Your Speech</h2>
+                </div>
+				<div class="row justify-content-center">
+					<div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <label>Source:</label>
+                            <select name="source">
+                                 {% for code, language in languages %}
+                                     <option value="{{ language }}" {% if source == language %}selected {% endif %}>{{ language }}</option>
+                                 {% endfor %}
+                            </select>
+                            <br/>
+                            <label>Destination:</label>
+                            <select name="destination">
+                                 {% for code, language in languages %}
+                                     <option value="{{ language }}" {% if destination == language %}selected {% endif %}>{{ language }}</option>
+                                 {% endfor %}
+                            </select>
+                            <br/>
+                            <input type="submit" value="Translate">
+                        </form>
+					</div>
+					<div class="col-xl-4 col-lg-6 order-2 order-lg-2 hero-img">
+                        {% if translated %}<textarea name="result" rows="6" cols="50">{{ translated }}</textarea>
+                        {% else %}<textarea name="result" rows="6" cols="50" placeholder="Output"></textarea>
+                        {% endif %}
+					</div>
+				</div>
+			</div>
+		</section>
+        <!-- End Hero -->
+
+        <!--================Footer Area =================-->
+        <footer class="footr_area">
+            <div class="footer_copyright">
+                <div class="container">
+                    <div class="float-sm-left">
+                        <h5>
+                            Copyright &copy; <script>document.write(new Date().getFullYear());</script><strong><span> PyTranslate</span></strong>. All Rights Reserved
+                        </h5>
+                    </div>
+                    <div class="float-sm-right">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+            </div>
+        </footer>
+        <!--================End Footer Area =================-->
+
+        <div id="preloader"></div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+        <!-- Extra plugin css -->
+        <!-- Vendor JS Files -->
+        <script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'vendors/magnify-popup/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'js/smoothscroll.js' %}"></script>
+        <script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+        <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+        <script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+        <script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
+        <script src="{% static 'vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+        <script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
+        <script src="{% static 'vendor/aos/aos.js' %}"></script>
+
+        <script src="{% static 'js/theme.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/card.js' %}"></script>
+    </body>
+</html>
