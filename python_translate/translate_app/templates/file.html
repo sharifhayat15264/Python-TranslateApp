@@ -103,11 +103,15 @@
                         </form>
 					</div>
 					<div class="col-xl-4 col-lg-6 order-2 order-lg-2 hero-img">
-                        {% if translated %}<textarea name="result" rows="6" cols="50">{{ translated }}</textarea>
-                        {% else %}<textarea name="result" rows="6" cols="50" placeholder="Output"></textarea>
+                        {% if translated %}
+                            <textarea name="result" rows="6" cols="50">{{ translated }}</textarea>
+                        {% else %}
+                            <textarea name="result" rows="6" cols="50" placeholder="Output"></textarea>
                         {% endif %}
                         <br/>
-                        {% if translated_file %}<a style="background: white" href={{ translated_file }} download>Download Translated File</a>{% endif %}
+                        {% if translated_file %}
+                            <a style="background: white" href={{ translated_file }} download>Download Translated File</a>
+                        {% endif %}
 					</div>
 				</div>
 			</div>

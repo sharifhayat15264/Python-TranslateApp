@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from uuid import uuid4
+from django.http import JsonResponse
 
 from .forms import *
 from .scripts.translate_text import *
 from .scripts.translate_file import *
-# from .scripts.translate_speech import *
+from .scripts.translate_speech import *
 
 fs = FileSystemStorage()
 
@@ -47,7 +48,7 @@ def text_view(request):
         else:
             print("Invalid Text Form!")
     else:
-        print("Invalid Text Form Request!")
+        print("GET Request!")
 
     return render(request, "text.html", context)
 
@@ -64,12 +65,11 @@ def file_view(request):
 
         # check whether it's valid:
         if form.is_valid():
-            print(form.data, request.FILES)
             # process the data in form.cleaned_data as required
             source = form.data['source']
             destination = form.data['destination']
 
-            filename, translated_text = handle_uploaded_file(request.FILES['upload_file'], destination, source)
+            filename, translated_text = handle_text_file(request.FILES['upload_file'], destination, source)
 
             context['source'] = source
             context['destination'] = destination
@@ -81,15 +81,24 @@ def file_view(request):
         else:
             print("Invalid File Form!")
     else:
-        print("Invalid File Form Request!")
+        print("GET Request!")
 
     return render(request, "file.html", context)
 
 
-def handle_uploaded_file(file, destination, source):
-    temp_filename = uuid4().hex + '.' + file.name.split('.')[-1]
+def rename_and_store(file, binary=False):
+    if binary:
+        temp_filename = uuid4().hex + ".wav"
+    else:
+        temp_filename = uuid4().hex + '.' + file.name.split('.')[-1]
+
     filename = fs.save(temp_filename, file)
     uploaded_file_url = fs.url(filename)
+    return uploaded_file_url
+
+
+def handle_text_file(file, destination, source):
+    uploaded_file_url = rename_and_store(file)
 
     if file.name.split('.')[-1] == "txt":
         filename, translated_text = translate_file(uploaded_file_url, destination, source)
@@ -102,36 +111,43 @@ def handle_uploaded_file(file, destination, source):
 
 
 def speech_view(request):
-    context = {'languages': SPEECH_CHOICES, 'source': '', 'destination': '', 'text': '', 'translated': ''}
+    context = {'languages': SPEECH_CHOICES}
+    print("GET Request!")
+    return render(request, "speech.html", context)
 
-    # render function takes argument  - request
-    # and return HTML as response
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
+
+def translate_speech_view(request):
+    # return JSON as response with status code
+    # request should be ajax and method should be POST.
+    if request.is_ajax and request.method == "POST":
         # create a form instance and populate it with data from the request:
-        form = TextForm(request.POST)
+        form = SpeechForm(request.POST, request.FILES)
 
         # check whether it's valid:
         if form.is_valid():
-            print(form.cleaned_data)
             # process the data in form.cleaned_data as required
             source = form.data['source']
             destination = form.data['destination']
-            text = form.cleaned_data['text_area']
 
-            translated_text = translate_text(text, destination, source)
+            filename, translated_text = handle_audio_file(request.FILES['audio_file'], destination, source)
 
-            context['source'] = source
-            context['destination'] = destination
-            context['text'] = text
-            context['translated'] = translated_text
+            response = {
+                'translated': translated_text,
+                'translated_file': filename
+            }
 
-            # redirect to a new URL:
-            return render(request, "speech.html", context)
+            # send to client side
+            return JsonResponse(response, status=200, safe=False)
         else:
-            print("Invalid Speech Form!")
+            # some form errors occurred
+            return JsonResponse({"error": form.errors}, status=400)
     else:
-        print("Invalid Speech Form Request!")
+        print("GET Request!")
 
-    return render(request, "speech.html", context)
 
+def handle_audio_file(binary_file, destination, source):
+    uploaded_file_url = rename_and_store(binary_file, binary=True)
+
+    filename, translated_text = translate_speech(uploaded_file_url, destination, source)
+
+    return filename, translated_text

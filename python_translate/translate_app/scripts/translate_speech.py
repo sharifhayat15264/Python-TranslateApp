@@ -1,7 +1,9 @@
+from django.conf import settings
 import speech_recognition as sr
 from googletrans import Translator, LANGUAGES
 import pyttsx3
 
+path = settings.MEDIA_URL
 langcodes = dict(map(reversed, LANGUAGES.items()))
 
 language_code_dict = {"Afrikaans (South Africa)": "af-ZA", "Albanian (Albania)": "sq-AL",
@@ -70,14 +72,25 @@ language_code_dict = {"Afrikaans (South Africa)": "af-ZA", "Albanian (Albania)":
                       "Zulu (South Africa)": "zu-ZA"}
 
 
-def speech_to_text(lang="en-US"):
+def speech_to_text(audio_file, lang="en-US"):
+    # use the audio file as the audio source
     r = sr.Recognizer()
-    mic = sr.Microphone(device_index=0)
-    with mic as source:
-        r.adjust_for_ambient_noise(source)
-        print("speak now")
-        audio = r.listen(source)
-    result = r.recognize_google(audio, language=lang)
+    with sr.AudioFile(audio_file) as source:
+        audio = r.record(source)  # read the entire audio file
+
+    # recognize speech using Google Speech Recognition
+    try:
+        # for testing purposes, we're just using the default API key
+        # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
+        # instead of `r.recognize_google(audio)`
+        result = r.recognize_google(audio, language=lang)
+    except sr.UnknownValueError:
+        print("Google Speech Recognition could not understand audio")
+        result = ''
+    except sr.RequestError as e:
+        print("Could not request results from Google Speech Recognition service; {0}".format(e))
+        result = ''
+
     return result
 
 
@@ -88,9 +101,10 @@ def translate_text(text, dest_code, src_code):
     return translation
 
 
-def text_to_speech(translated_text):
+def text_to_speech(translated_text, filename):
     engine = pyttsx3.init()
-    # voices = engine.getProperty('voices')
+
+    voices = engine.getProperty('voices')
     # for voice in voices:
     #     print("Voice: ")
     #     print(" - ID: %s" % voice.id)
@@ -98,24 +112,29 @@ def text_to_speech(translated_text):
     #     print(" - Languages: %s" % voice.languages)
     #     print(" - Gender: %s" % voice.gender)
     #     print(" - Age: %s" % voice.age)
-    voice_id = r"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_DAVID_11.0"
+
+    voice_id = voices[0].id
     engine.setProperty('voice', voice_id)
+
+    engine.save_to_file(translated_text, filename)
     engine.say(translated_text)
+
     engine.runAndWait()
     return
 
 
-def driver(dest_lang, src_lang):
+def translate_speech(audio_file, dest_lang, src_lang):
     dest_code = language_code_dict[dest_lang]
     src_code = language_code_dict[src_lang]
 
-    result = speech_to_text(src_code)  # Specify language, record sound and generate text.
+    result = speech_to_text(audio_file, src_code)  # Specify language, record sound and generate text.
     print(result)
 
-    translation = translate_text(result, dest_code.split("-")[0], src_code.split("-")[0])  # Use the text to get translation
-    print(translation)
+    if result:
+        translation = translate_text(result, dest_code.split("-")[0], src_code.split("-")[0])  # Use the text to get translation
+        print(translation)
+    else:
+        translation = ''
 
-    text_to_speech(translation)  # Output translation as audio
-
-
-driver("Spanish (Spain)", "English (Pakistan)")
+    text_to_speech(translation, audio_file)  # Output translation as audio
+    return audio_file, translation

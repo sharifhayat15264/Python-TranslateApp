@@ -83,26 +83,31 @@
                         <form action="" method="post">
                             {% csrf_token %}
                             <label>Source:</label>
-                            <select name="source">
+                            <select name="source" id="source">
                                  {% for code, language in languages %}
-                                     <option value="{{ language }}" {% if source == language %}selected {% endif %}>{{ language }}</option>
+                                     <option value="{{ language }}">{{ language }}</option>
                                  {% endfor %}
                             </select>
                             <br/>
                             <label>Destination:</label>
-                            <select name="destination">
+                            <select name="destination" id="destination">
                                  {% for code, language in languages %}
-                                     <option value="{{ language }}" {% if destination == language %}selected {% endif %}>{{ language }}</option>
+                                     <option value="{{ language }}">{{ language }}</option>
                                  {% endfor %}
                             </select>
-                            <br/>
-                            <input type="submit" value="Translate">
+                            <div id="controls">
+                                <button id="recordButton">Record</button>
+                                <button id="stopButton" disabled="">Stop</button>
+                            </div>
+
+                            <input class="audio-btn strt disable-btn" id="submit" type="submit" value="Translate" disabled>
+                            <span class="upload-comp">Uploading Complete</span>
                         </form>
 					</div>
 					<div class="col-xl-4 col-lg-6 order-2 order-lg-2 hero-img">
-                        {% if translated %}<textarea name="result" rows="6" cols="50">{{ translated }}</textarea>
-                        {% else %}<textarea name="result" rows="6" cols="50" placeholder="Output"></textarea>
-                        {% endif %}
+                        <textarea id="output" name="result" rows="6" cols="50"></textarea>
+                        <ol id="recordingsList"></ol>
+                        <br/>
 					</div>
 				</div>
 			</div>
@@ -159,5 +164,8 @@
         <script src="{% static 'js/theme.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
         <script src="{% static 'js/card.js' %}"></script>
+
+        <script src="{% static 'js/WebAudioRecorder.min.js' %}"></script>
+        <script src="{% static 'js/audio.js' %}"></script>
     </body>
 </html>
