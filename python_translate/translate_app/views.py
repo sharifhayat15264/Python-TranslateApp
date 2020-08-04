@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
 from uuid import uuid4
 from django.http import JsonResponse
@@ -9,6 +9,12 @@ from .scripts.translate_file import *
 from .scripts.translate_speech import *
 
 fs = FileSystemStorage()
+
+
+def view_404(request, exception=None):
+    # make a redirect to homepage
+    # you can use the name of url or just the plain link
+    return redirect('/')  # or redirect('name-of-index-url')
 
 
 # Create your views here.

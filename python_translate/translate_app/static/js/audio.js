@@ -18,6 +18,20 @@ $(document).ready(function() {
     recordButton.addEventListener("click", startRecording);
     stopButton.addEventListener("click", stopRecording);
 
+    // A Stopwatch instance that displays its time nicely formatted.
+    var stopwatch = new Stopwatch(function(runtime) {
+       // format time as m:ss.d
+       var minutes = Math.floor(runtime / 60000);
+       var seconds = Math.floor(runtime % 60000 / 1000);
+       var decimals = Math.floor(runtime % 1000 / 100);
+       var displayText = "Time: " + minutes + ":" + (seconds < 10 ? "0" : "") + seconds + "." + decimals;
+
+       // writing output to screen
+       $("#time").html(displayText);
+    });
+
+    var previous = false;
+
     function startRecording() {
         /*
             Simple constraints object, for more advanced features see
@@ -47,6 +61,15 @@ $(document).ready(function() {
 
             // get the encoding
             encodingType = "wav";
+
+            if (previous) {
+                // resetting stopwatch
+                stopwatch.resetLap();
+                previous = false;
+            }
+
+            // starting
+            stopwatch.startStop();
 
             recorder = new WebAudioRecorder(input, {
               workerDir: "/static/js/", // must end with slash
@@ -92,6 +115,11 @@ $(document).ready(function() {
         // stop microphone access
         gumStream.getAudioTracks()[0].stop();
 
+        previous = true;
+
+        // stopping
+        stopwatch.startStop();
+
         // disable the stop button
         $("#recordButton").attr("disabled", false);
         $("#stopButton").attr("disabled", true);
@@ -105,8 +133,8 @@ $(document).ready(function() {
 
     $('#submit').on('click', function() {
         var btn = $(this);
-        btn.html('Saving...').prop('disabled', true).addClass('disable-btn');
-        $("#recordButton").attr("disabled", false);
+        btn.html('Translating...').prop('disabled', true).addClass('disable-btn');
+
         $("#stopButton").attr("disabled", true);
 
         var myFile = new Blob([audio_blob], { type: "audio/wav" });
@@ -125,16 +153,25 @@ $(document).ready(function() {
             success: function(data) {
                 $("#output").val(data.translated);
                 createDownloadLink(data.translated_file);
+
+                $("#recordButton").attr("disabled", false);
+                $("#submit").html("Translate");
+            },
+            error: function(request, status, error) {
+                $("#recordButton").attr("disabled", false);
+                $("#submit").html("Translate");
             },
             cache: false,
             contentType: false,
             processData: false
         });
+
+        // resetting stopwatch
+        stopwatch.resetLap();
     });
 
     function createDownloadLink(translated_file) {
-        var recordingsList = $("#recordingsList");
-        recordingsList.empty();
+        $("#recordingsList").empty();
 
         var au = document.createElement('audio');
         var li = document.createElement('li');
@@ -146,7 +183,7 @@ $(document).ready(function() {
 
         // link the a element to the blob
         link.href = translated_file;
-        link.download = new Date().toISOString() + '.' + wav;
+        link.download = new Date().toISOString() + '.' + 'wav';
         link.innerHTML = link.download;
 
         // add the new audio and a elements to the li element
@@ -154,6 +191,6 @@ $(document).ready(function() {
         li.appendChild(link);
 
         // add the li element to the ordered list
-        recordingsList.appendChild(li);
+       document.getElementById("recordingsList").appendChild(li);
     }
 });

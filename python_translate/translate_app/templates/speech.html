@@ -62,7 +62,10 @@
 
                         <nav class="nav-menu d-none d-lg-block">
                             <ul>
-                                <li class="active"><a href="/home">Home</a></li>
+                                <li><a href="/home">Home</a></li>
+                                <li><a href="/text">Text</a></li>
+                                <li><a href="/file">File</a></li>
+                                <li class="active"><a href="">Speech</a></li>
                                 <li><a href="https://github.com/sharifhayat15264/Python-TranslateApp">Github</a></li>
                             </ul>
                         </nav><!-- .nav-menu -->
@@ -79,35 +82,42 @@
                     <h2>Translate Your Speech</h2>
                 </div>
 				<div class="row justify-content-center">
-					<div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
-                        <form action="" method="post">
+					<div class="col-xl-4 col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                        <form class="my_form" action="" method="post">
                             {% csrf_token %}
-                            <label>Source:</label>
-                            <select name="source" id="source">
-                                 {% for code, language in languages %}
-                                     <option value="{{ language }}">{{ language }}</option>
-                                 {% endfor %}
-                            </select>
-                            <br/>
-                            <label>Destination:</label>
-                            <select name="destination" id="destination">
-                                 {% for code, language in languages %}
-                                     <option value="{{ language }}">{{ language }}</option>
-                                 {% endfor %}
-                            </select>
-                            <div id="controls">
-                                <button id="recordButton">Record</button>
-                                <button id="stopButton" disabled="">Stop</button>
+                            <div class="form-group">
+                                <label>Source:</label>
+                                <select name="source" id="source">
+                                     {% for code, language in languages %}
+                                         <option value="{{ language }}">{{ language }}</option>
+                                     {% endfor %}
+                                </select>
                             </div>
-
-                            <input class="audio-btn strt disable-btn" id="submit" type="submit" value="Translate" disabled>
-                            <span class="upload-comp">Uploading Complete</span>
+                            <div class="form-group">
+                                <label>Destination:</label>
+                                <select name="destination" id="destination">
+                                     {% for code, language in languages %}
+                                         <option value="{{ language }}">{{ language }}</option>
+                                     {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div id="controls">
+                                    <p id="time"> Time: 0:00.0 </p>
+                                    <button id="recordButton">Record</button>
+                                    <button id="stopButton" disabled="">Stop</button>
+                                </div>
+                            </div>
+                            <button class="more_btn" id="submit" type="submit" disabled>Translate</button>
                         </form>
 					</div>
-					<div class="col-xl-4 col-lg-6 order-2 order-lg-2 hero-img">
-                        <textarea id="output" name="result" rows="6" cols="50"></textarea>
-                        <ol id="recordingsList"></ol>
-                        <br/>
+					<div class="col-xl-4 col-lg-6 order-2 order-lg-2 pt-3 pt-lg-0">
+                        <div class="form-group">
+                            <textarea id="output" name="result" placeholder="Output"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <ol id="recordingsList"></ol>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -167,5 +177,6 @@
 
         <script src="{% static 'js/WebAudioRecorder.min.js' %}"></script>
         <script src="{% static 'js/audio.js' %}"></script>
+        <script src="{% static 'js/stopwatch.js' %}"></script>
     </body>
 </html>

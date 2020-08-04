@@ -24,4 +24,5 @@ urlpatterns = [
     path('', include('translate_app.urls')),
     path('home/', include('translate_app.urls')),
     path('admin/', admin.site.urls),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static('file/' + settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+  + static('speech/' + settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

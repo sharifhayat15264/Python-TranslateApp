@@ -62,7 +62,10 @@
 
                         <nav class="nav-menu d-none d-lg-block">
                             <ul>
-                                <li class="active"><a href="/home">Home</a></li>
+                                <li><a href="/home">Home</a></li>
+                                <li><a href="/text">Text</a></li>
+                                <li class="active"><a href="">File</a></li>
+                                <li><a href="/speech">Speech</a></li>
                                 <li><a href="https://github.com/sharifhayat15264/Python-TranslateApp">Github</a></li>
                             </ul>
                         </nav><!-- .nav-menu -->
@@ -79,38 +82,44 @@
                     <h2>Translate Your File</h2>
                 </div>
 				<div class="row justify-content-center">
-					<div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
-                        <form action="" method="post" enctype="multipart/form-data">
+					<div class="col-xl-4 col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                        <form class="my_form" action="" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <label>Source:</label>
-                            <select name="source">
-                                 {% for code, language in languages %}
-                                     <option value="{{ language }}" {% if source == language %}selected {% endif %}>{{ language }}</option>
-                                 {% endfor %}
-                            </select>
-                            <br/>
-                            <label>Destination:</label>
-                            <select name="destination">
-                                 {% for code, language in languages %}
-                                     <option value="{{ language }}" {% if destination == language %}selected {% endif %}>{{ language }}</option>
-                                 {% endfor %}
-                            </select>
-                            <br/>
-                            <input type="file" name="upload_file" id="upload_file"
-                                accept=".txt,.pdf,.doc,.docx">
-                            <br/>
-                            <input type="submit" value="Translate">
+                            <div class="form-group">
+                                <label>Source:</label>
+                                <select name="source">
+                                     {% for code, language in languages %}
+                                         <option value="{{ language }}" {% if source == language %}selected {% endif %}>{{ language }}</option>
+                                     {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Destination:</label>
+                                <select name="destination">
+                                     {% for code, language in languages %}
+                                         <option value="{{ language }}" {% if destination == language %}selected {% endif %}>{{ language }}</option>
+                                     {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="file" name="upload_file" id="upload_file"
+                                    accept=".txt,.pdf,.doc,.docx">
+                            </div>
+                            <button class="more_btn" type="submit">Translate</button>
                         </form>
 					</div>
-					<div class="col-xl-4 col-lg-6 order-2 order-lg-2 hero-img">
-                        {% if translated %}
-                            <textarea name="result" rows="6" cols="50">{{ translated }}</textarea>
-                        {% else %}
-                            <textarea name="result" rows="6" cols="50" placeholder="Output"></textarea>
-                        {% endif %}
-                        <br/>
+					<div class="col-xl-4 col-lg-6 order-2 order-lg-2 pt-3 pt-lg-0">
+                        <div class="form-group">
+                            {% if translated %}
+                                <textarea name="result">{{ translated }}</textarea>
+                            {% else %}
+                                <textarea name="result"placeholder="Output"></textarea>
+                            {% endif %}
+                        </div>
                         {% if translated_file %}
-                            <a style="background: white" href={{ translated_file }} download>Download Translated File</a>
+                            <div class="form-group">
+                                <a style="background: white" href={{ translated_file }} download>Download Translated File</a>
+                            </div>
                         {% endif %}
 					</div>
 				</div>
