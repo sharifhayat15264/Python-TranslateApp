@@ -21,7 +21,7 @@ idna==2.10
 IMAPClient==2.1.0
 immutables==0.14
 importlib-metadata==1.7.0
-lxml==4.5.2
+lxml==4.6.2
 olefile==0.46
 pdf2text==1.0.0
 pdfminer==20191125
