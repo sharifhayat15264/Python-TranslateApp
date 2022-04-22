@@ -28,7 +28,7 @@ pdfminer==20191125
 pdfminer.six==20181108
 Pillow==7.2.0
 pycryptodome==3.9.8
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 python-docx==0.8.10
 python-pptx==0.6.18
 pytz==2020.1
